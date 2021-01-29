@@ -1,9 +1,4 @@
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-    types: [opened]
+on: [push, pull_request]
 
 jobs:
   hello_world_job:
