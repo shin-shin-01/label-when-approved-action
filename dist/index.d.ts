@@ -1,2 +1,1 @@
-declare const core: any;
-declare const github: any;
+export declare function main(): void;
