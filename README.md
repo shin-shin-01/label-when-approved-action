@@ -1,4 +1,4 @@
-練習で作成
+## 練習で作成
 @see https://docs.github.com/ja/actions/creating-actions/creating-a-javascript-action
 
 # Hello world javascript action
@@ -19,6 +19,8 @@ The time we greeted you.
 
 ## Example usage
 
+```
 uses: actions/~@v1.1
 with:
   who-to-greet: 'Kaze'
+```
