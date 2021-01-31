@@ -1,18 +1,15 @@
-on: [push, pull_request]
+on:
+  - pull_request
 
 jobs:
-  hello_world_job:
+  label_job:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    name: A job to Label to PullRequest
     steps:
       - name: checkout
         uses: actions/checkout@v2
       - run: npm ci
-      - name: Hello world action step
+      - name: label action step
         uses: ./ # Uses an action in the root directory
-        id: hello
         with:
-          who-to-greet: 'Kaze'
-      # Use the output from the `hello` step
-      - name: Get the output time
-        run: echo "The time was ${{ steps.hello.outputs.time }}"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
