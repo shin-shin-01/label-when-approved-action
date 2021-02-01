@@ -44,7 +44,7 @@ class PullRequest {
             const result = yield this.client.issues.addLabels({
                 owner,
                 repo,
-                pull_number,
+                issue_number: pull_number,
                 labels
             });
             core.debug(JSON.stringify(result));

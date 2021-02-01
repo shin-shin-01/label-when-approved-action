@@ -20,7 +20,7 @@ export class PullRequest {
     const result = await this.client.issues.addLabels({
       owner,
       repo,
-      pull_number,
+      issue_number: pull_number,
       labels
     });
 
