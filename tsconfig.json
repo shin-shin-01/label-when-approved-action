@@ -17,11 +17,11 @@
   },
   "include": [
     "src/**/*",
-    "*.ts",
-    "__tests__"
+    "*.ts"
   ],
   "exclude": [
       "node_modules",
-      "**/*.spec.ts"
+      "**/*.spec.ts",
+      "jest.config.ts"
   ]
 }
