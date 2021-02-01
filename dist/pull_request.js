@@ -38,6 +38,9 @@ class PullRequest {
     addLabels(labels) {
         return __awaiter(this, void 0, void 0, function* () {
             const { owner, repo, number: pull_number } = this.context.issue;
+            console.log(`owner: ${owner}`);
+            console.log(`repo: ${repo}`);
+            console.log(`pull_number: ${pull_number}`);
             const result = yield this.client.issues.addLabels({
                 owner,
                 repo,

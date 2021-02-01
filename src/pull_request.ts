@@ -13,6 +13,9 @@ export class PullRequest {
 
   async addLabels(labels: string[]): Promise<void> {
     const { owner, repo, number: pull_number } = this.context.issue;
+    console.log(`owner: ${owner}`);
+    console.log(`repo: ${repo}`);
+    console.log(`pull_number: ${pull_number}`);
 
     const result = await this.client.issues.addLabels({
       owner,
