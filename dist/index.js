@@ -37,11 +37,17 @@ function main() {
         try {
             // input
             // GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            const myToken = core.getInput('GITHUB_TOKEN', { required: true });
+            const myToken = core.getInput("GITHUB_TOKEN", { required: true });
+            console.log(`GET Token: ${myToken}`);
             const client = github.getOctokit(myToken);
+            console.log("created client");
             const pr = new pull_request_1.PullRequest(client, github.context);
+            console.log("created PullRequest");
             if (!pr.hasAnyLabel(["labeled"])) {
                 yield pr.addLabels(["labeled"]);
+            }
+            else {
+                console.log("already labeledToken");
             }
         }
         catch (error) {
