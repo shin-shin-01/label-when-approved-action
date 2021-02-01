@@ -11,6 +11,7 @@
     "jsxBracketSameLine": false,
     "arrowParens": "avoid",
     "rangeStart": 0,
+    "rangeEnd": 200,
     "parser": "typescript",
     "filepath": "none",
     "requirePragma": false,

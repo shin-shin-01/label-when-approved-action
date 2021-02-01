@@ -1,0 +1,16 @@
+name: Run Jest
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: A job to run jest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - run: npm ci
+      - name: Run test
+        run: npx jest
