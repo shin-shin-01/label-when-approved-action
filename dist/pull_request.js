@@ -28,33 +28,35 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.main = void 0;
+exports.PullRequest = void 0;
 const core = __importStar(require("@actions/core"));
-const github = __importStar(require("@actions/github"));
-const pull_request_1 = require("./pull_request");
-function main() {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            // input
-            // GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            const myToken = core.getInput("MYTOKEN", { required: true });
-            console.log(`GET Token: ${myToken}`);
-            const client = github.getOctokit(myToken);
-            console.log("created client");
-            const pr = new pull_request_1.PullRequest(client, github.context);
-            console.log("created PullRequest");
-            if (!pr.hasAnyLabel(["labeled"])) {
-                yield pr.addLabels(["labeled"]);
-            }
-            else {
-                console.log("already labeledToken");
-            }
+class PullRequest {
+    constructor(client, context) {
+        this.client = client;
+        this.context = context;
+    }
+    addLabels(labels) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { owner, repo, number: pull_number } = this.context.issue;
+            console.log(`owner: ${owner}`);
+            console.log(`repo: ${repo}`);
+            console.log(`pull_number: ${pull_number}`);
+            const result = yield this.client.issues.addLabels({
+                owner,
+                repo,
+                issue_number: pull_number,
+                labels
+            });
+            core.debug(JSON.stringify(result));
+        });
+    }
+    hasAnyLabel(labels) {
+        if (!this.context.payload.pull_request) {
+            return false;
         }
-        catch (error) {
-            console.log(error);
-            core.setFailed(error.message);
-        }
-    });
+        const pullRequestLabels = this.context.payload.pull_request
+            .labels;
+        return pullRequestLabels.some(label => labels.includes(label));
+    }
 }
-exports.main = main;
-main();
+exports.PullRequest = PullRequest;

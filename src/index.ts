@@ -1,20 +1,27 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
+import { PullRequest } from "./pull_request";
 
-export function main(): void {
+export async function main() {
   try {
-    const nameToGreet: string = core.getInput("who-to-greet");
-    console.log(`Hello ${nameToGreet}!`);
-    const time: string = new Date().toTimeString();
-    core.setOutput("time", time);
-    // Get the JSON webhook payload for the event that triggered the workflow
-    const payload: string = JSON.stringify(
-      github.context.payload,
-      undefined,
-      2
-    );
-    console.log(`The event payload: ${payload}`);
+    // input
+    // GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    const myToken: string = core.getInput("MYTOKEN", { required: true });
+    console.log(`GET Token: ${myToken}`);
+
+    const client: any = github.getOctokit(myToken);
+    console.log("created client");
+
+    const pr = new PullRequest(client, github.context);
+    console.log("created PullRequest");
+
+    if (!pr.hasAnyLabel(["labeled"])) {
+      await pr.addLabels(["labeled"]);
+    } else {
+      console.log("already labeledToken");
+    }
   } catch (error) {
+    console.log(error);
     core.setFailed(error.message);
   }
 }

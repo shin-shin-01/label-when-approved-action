@@ -1,13 +1,10 @@
 name: 'Hello World'
-description: 'Greet somone and record the time'
+description: 'Label to PullRequest'
 inputs:
-  who-to-greet: # id of input
-    description: 'Who to greet'
+  MYTOKEN: # id of input
+    description: 'github token'
     required: true
-    default: 'World'
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+    default: 'None'
 runs:
   using: 'node12'
   main: 'dist/index.js'
