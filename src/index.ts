@@ -6,7 +6,7 @@ export async function main() {
   try {
     // input
     // GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    const myToken: string = core.getInput("GITHUB_TOKEN", { required: true });
+    const myToken: string = core.getInput("MYTOKEN", { required: true });
     console.log(`GET Token: ${myToken}`);
 
     const client: any = github.getOctokit(myToken);
