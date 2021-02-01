@@ -5,8 +5,8 @@ import { PullRequest } from "./pull_request";
 export async function main() {
   try {
     // input
-    // myToken: ${{ secrets.GITHUB_TOKEN }}
-    const myToken :string = core.getInput('myToken', { required: true })
+    // GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    const myToken :string = core.getInput('GITHUB_TOKEN', { required: true })
     const client :any = github.getOctokit(myToken)
 
     const pr = new PullRequest(client, github.context)

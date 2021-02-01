@@ -36,8 +36,8 @@ function main() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             // input
-            // myToken: ${{ secrets.GITHUB_TOKEN }}
-            const myToken = core.getInput('myToken', { required: true });
+            // GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            const myToken = core.getInput('GITHUB_TOKEN', { required: true });
             const client = github.getOctokit(myToken);
             const pr = new pull_request_1.PullRequest(client, github.context);
             if (!pr.hasAnyLabel(["labeled"])) {
