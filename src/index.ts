@@ -12,7 +12,7 @@ export async function main() {
     const pr = new PullRequest(client, github.context)
 
     if (!pr.hasAnyLabel(["labeled"])) {
-      pr.addLabels(["labeled"])
+      await pr.addLabels(["labeled"])
     }
 
   } catch (error) {

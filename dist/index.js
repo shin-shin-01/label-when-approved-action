@@ -41,7 +41,7 @@ function main() {
             const client = github.getOctokit(myToken);
             const pr = new pull_request_1.PullRequest(client, github.context);
             if (!pr.hasAnyLabel(["labeled"])) {
-                pr.addLabels(["labeled"]);
+                yield pr.addLabels(["labeled"]);
             }
         }
         catch (error) {
