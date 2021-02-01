@@ -21,8 +21,9 @@ export async function main() {
       console.log("already labeledToken");
     }
   } catch (error) {
+    console.log(error);
     core.setFailed(error.message);
   }
 }
 
-main()
+main();
