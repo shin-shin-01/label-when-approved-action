@@ -15,10 +15,19 @@ export async function main() {
     const pr = new PullRequest(client, github.context);
     console.log("created PullRequest");
 
-    if (!pr.hasAnyLabel(["labeled"])) {
-      await pr.addLabels(["labeled"]);
+    // Approved されているか？
+    if (pr.isApproved()) {
+      // ユーザ名取得
+      const username: string = pr.getUserName();
+      // ユーザ名で既に Label付けされているか？
+      if (!pr.hasAnyLabel([username])) {
+        // ラベル付与
+        await pr.addLabels([username]);
+      } else {
+        console.log("already labeled");
+      }
     } else {
-      console.log("already labeledToken");
+      console.log("not Approved");
     }
   } catch (error) {
     console.log(error);
