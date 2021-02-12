@@ -5,4 +5,6 @@ export declare class PullRequest {
     constructor(client: any, context: Context);
     addLabels(labels: string[]): Promise<void>;
     hasAnyLabel(labels: string[]): boolean;
+    getUserName(): string;
+    isApproved(): boolean;
 }

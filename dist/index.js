@@ -43,11 +43,21 @@ function main() {
             console.log("created client");
             const pr = new pull_request_1.PullRequest(client, github.context);
             console.log("created PullRequest");
-            if (!pr.hasAnyLabel(["labeled"])) {
-                yield pr.addLabels(["labeled"]);
+            // Approved されているか？
+            if (pr.isApproved()) {
+                // ユーザ名取得
+                const username = pr.getUserName();
+                // ユーザ名で既に Label付けされているか？
+                if (!pr.hasAnyLabel([username])) {
+                    // ラベル付与
+                    yield pr.addLabels([username]);
+                }
+                else {
+                    console.log("already labeled");
+                }
             }
             else {
-                console.log("already labeledToken");
+                console.log("not Approved");
             }
         }
         catch (error) {
