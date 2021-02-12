@@ -12,6 +12,8 @@ export class PullRequest {
   }
 
   async addLabels(labels: string[]): Promise<void> {
+    // Action実行時に取得できる情報
+    // @see https://github.com/actions/toolkit/blob/825204968bef6c9829341275d8a35de5702dd965/packages/github/src/context.ts#L6
     const { owner, repo, number: pull_number } = this.context.issue;
     console.log(`owner: ${owner}`);
     console.log(`repo: ${repo}`);
