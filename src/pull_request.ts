@@ -49,6 +49,7 @@ export class PullRequest {
   // Review によって Approved されているか？
   isApproved(): boolean {
     const state: string = this.context.payload.state;
+    console.log(this.context);
     return state == "APPROVED";
   }
 }
