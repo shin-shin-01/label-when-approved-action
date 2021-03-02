@@ -63,13 +63,13 @@ class PullRequest {
     // review 時の payload @see https://docs.github.com/en/rest/reference/pulls#reviews
     // review をしたユーザ名を取得
     getUserName() {
-        const username = this.context.payload.user.login;
+        const username = this.context.actor;
         return username;
     }
     // Review によって Approved されているか？
     isApproved() {
-        const state = this.context.payload.state;
-        return state == "APPROVED";
+        const state = this.context.payload.review.state;
+        return state == "approved";
     }
 }
 exports.PullRequest = PullRequest;

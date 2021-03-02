@@ -43,9 +43,6 @@ function main() {
             console.log("created client");
             const pr = new pull_request_1.PullRequest(client, github.context);
             console.log("created PullRequest");
-            // to debug
-            const context = JSON.stringify(github.context, undefined, 2);
-            console.log(`The event context: ${context}`);
             // Approved されているか？
             if (pr.isApproved()) {
                 // ユーザ名取得

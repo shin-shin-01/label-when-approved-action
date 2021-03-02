@@ -15,10 +15,6 @@ export async function main() {
     const pr = new PullRequest(client, github.context);
     console.log("created PullRequest");
 
-    // to debug
-    const context: string = JSON.stringify(github.context, undefined, 2);
-    console.log(`The event context: ${context}`);
-
     // Approved されているか？
     if (pr.isApproved()) {
       // ユーザ名取得
