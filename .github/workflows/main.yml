@@ -17,4 +17,4 @@ jobs:
       - name: label action step
         uses: ./ # Uses an action in the root directory
         with:
-          MYTOKEN: ${{ secrets.MYTOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

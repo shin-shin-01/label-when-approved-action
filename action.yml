@@ -1,7 +1,7 @@
 name: 'Label to PullRequest when approved'
 description: 'Label to PullRequest when approved'
 inputs:
-  MYTOKEN: # id of input
+  GITHUB_TOKEN: # id of input
     description: 'github token'
     required: true
     default: 'None'
