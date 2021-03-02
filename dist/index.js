@@ -43,22 +43,10 @@ function main() {
             console.log("created client");
             const pr = new pull_request_1.PullRequest(client, github.context);
             console.log("created PullRequest");
-            // Approved されているか？
-            if (pr.isApproved()) {
-                // ユーザ名取得
-                const username = pr.getUserName();
-                // ユーザ名で既に Label付けされているか？
-                if (!pr.hasAnyLabel([username])) {
-                    // ラベル付与
-                    yield pr.addLabels([username]);
-                }
-                else {
-                    console.log("already labeled");
-                }
-            }
-            else {
-                console.log("not Approved");
-            }
+            // to debug
+            const context = JSON.stringify(github.context, undefined, 2);
+            console.log(`The event context: ${context}`);
+            // await add_label_when_reviewd(pr);
         }
         catch (error) {
             console.log(error);
@@ -67,4 +55,24 @@ function main() {
     });
 }
 exports.main = main;
+function add_label_when_reviewd(pr) {
+    return __awaiter(this, void 0, void 0, function* () {
+        // Approved されているか？
+        if (pr.isApproved()) {
+            // ユーザ名取得
+            const username = pr.getUserName();
+            // ユーザ名で既に Label付けされているか？
+            if (!pr.hasAnyLabel([username])) {
+                // ラベル付与
+                yield pr.addLabels([username]);
+            }
+            else {
+                console.log("already labeled");
+            }
+        }
+        else {
+            console.log("not Approved");
+        }
+    });
+}
 main();
