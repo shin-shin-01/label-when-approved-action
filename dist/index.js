@@ -43,21 +43,11 @@ function main() {
             console.log("created client");
             const pr = new pull_request_1.PullRequest(client, github.context);
             console.log("created PullRequest");
-            // Approved されているか？
-            if (pr.isApproved()) {
-                // ユーザ名取得
-                const username = pr.getUserName();
-                // ユーザ名で既に Label付けされているか？
-                if (!pr.hasAnyLabel([username])) {
-                    // ラベル付与
-                    yield pr.addLabels([username]);
-                }
-                else {
-                    console.log("already labeled");
-                }
+            if (pr.actionIsReviewed()) {
+                yield add_label_when_reviewd(pr);
             }
-            else {
-                console.log("not Approved");
+            else if (pr.actionIsReviewRequested()) {
+                yield rm_label_when_rereview_requested(pr);
             }
         }
         catch (error) {
@@ -67,4 +57,38 @@ function main() {
     });
 }
 exports.main = main;
+function add_label_when_reviewd(pr) {
+    return __awaiter(this, void 0, void 0, function* () {
+        // Approved されているか？
+        if (pr.isApproved()) {
+            // ユーザ名取得
+            const username = pr.getUserName();
+            // ユーザ名で既に Label付けされているか？
+            if (!pr.hasAnyLabel([username])) {
+                // ラベル付与
+                yield pr.addLabels([username]);
+            }
+            else {
+                console.log("already labeled");
+            }
+        }
+        else {
+            console.log("not Approved");
+        }
+    });
+}
+function rm_label_when_rereview_requested(pr) {
+    return __awaiter(this, void 0, void 0, function* () {
+        // Review依頼している ユーザ名取得
+        const username = pr.getRequestedUserName();
+        // ユーザ名で既に Label付けされているか？
+        if (pr.hasAnyLabel([username])) {
+            // ラベル削除
+            yield pr.rmLabel(username);
+        }
+        else {
+            console.log("not labeled yet");
+        }
+    });
+}
 main();
