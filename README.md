@@ -1,26 +1,16 @@
-## 練習で作成
-@see https://docs.github.com/ja/actions/creating-actions/creating-a-javascript-action
+# Label When Approved action
 
-# Hello world javascript action
-
-This action prints "Hello World" or "Hello" + the name of a person to greet to the log.
+This action add label to PullRequest when approved, and remove label when requested review after approved. 
 
 ## Inputs
 
-### `who-to-greet`
-
-**Required** The name of the person to greet. Default `"World"`.
-
-## Outputs
-
-### `time`
-
-The time we greeted you.
+### `GITHUB_TOKEN`
 
 ## Example usage
 
 ```
-uses: actions/~@v1.1
-with:
-  who-to-greet: 'Kaze'
+- name: Label When Approved action step
+  uses: shin-shin-01/label-when-approved-action@v1.0
+  with:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
