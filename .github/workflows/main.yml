@@ -1,6 +1,11 @@
 on:
+  # レビュー依頼を行なった時
+  pull_request:
+    types:
+      - review_requested
+  # レビューをしたとき
   - pull_request_review
-
+  
 jobs:
   label_job:
     runs-on: ubuntu-latest
