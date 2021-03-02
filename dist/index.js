@@ -43,10 +43,12 @@ function main() {
             console.log("created client");
             const pr = new pull_request_1.PullRequest(client, github.context);
             console.log("created PullRequest");
-            // to debug
-            const context = JSON.stringify(github.context, undefined, 2);
-            console.log(`The event context: ${context}`);
-            // await add_label_when_reviewd(pr);
+            if (pr.actionIsReviewed()) {
+                yield add_label_when_reviewd(pr);
+            }
+            else if (pr.actionIsReviewRequested()) {
+                yield rm_label_when_rereview_requested(pr);
+            }
         }
         catch (error) {
             console.log(error);
@@ -72,6 +74,20 @@ function add_label_when_reviewd(pr) {
         }
         else {
             console.log("not Approved");
+        }
+    });
+}
+function rm_label_when_rereview_requested(pr) {
+    return __awaiter(this, void 0, void 0, function* () {
+        // Review依頼している ユーザ名取得
+        const username = pr.getRequestedUserName();
+        // ユーザ名で既に Label付けされているか？
+        if (pr.hasAnyLabel([username])) {
+            // ラベル削除
+            yield pr.rmLabel(username);
+        }
+        else {
+            console.log("not labeled yet");
         }
     });
 }
