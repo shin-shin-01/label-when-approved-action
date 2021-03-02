@@ -37,6 +37,8 @@ class PullRequest {
     }
     addLabels(labels) {
         return __awaiter(this, void 0, void 0, function* () {
+            // Action実行時に取得できる情報
+            // @see https://github.com/actions/toolkit/blob/825204968bef6c9829341275d8a35de5702dd965/packages/github/src/context.ts#L6
             const { owner, repo, number: pull_number } = this.context.issue;
             console.log(`owner: ${owner}`);
             console.log(`repo: ${repo}`);
@@ -57,6 +59,17 @@ class PullRequest {
         const pullRequestLabels = this.context.payload.pull_request
             .labels;
         return pullRequestLabels.some(label => labels.includes(label));
+    }
+    // review 時の payload @see https://docs.github.com/en/rest/reference/pulls#reviews
+    // review をしたユーザ名を取得
+    getUserName() {
+        const username = this.context.actor;
+        return username;
+    }
+    // Review によって Approved されているか？
+    isApproved() {
+        const state = this.context.payload.review.state;
+        return state == "approved";
     }
 }
 exports.PullRequest = PullRequest;

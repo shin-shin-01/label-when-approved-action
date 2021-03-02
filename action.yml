@@ -1,5 +1,5 @@
-name: 'Hello World'
-description: 'Label to PullRequest'
+name: 'Label to PullRequest when approved'
+description: 'Label to PullRequest when approved'
 inputs:
   MYTOKEN: # id of input
     description: 'github token'

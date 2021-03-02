@@ -1,10 +1,10 @@
 on:
-  - pull_request
+  - pull_request_review
 
 jobs:
   label_job:
     runs-on: ubuntu-latest
-    name: A job to Label to PullRequest
+    name: A job to Label to PullRequest when approved
     steps:
       - name: checkout
         uses: actions/checkout@v2
