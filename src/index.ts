@@ -16,8 +16,12 @@ export async function main() {
     console.log("created PullRequest");
 
     // to debug
-    const context: string = JSON.stringify(github.context, undefined, 2);
-    console.log(`The event context: ${context}`);
+    const payload: string = JSON.stringify(
+      github.context.payload,
+      undefined,
+      2
+    );
+    console.log(`The event payload: ${payload}`);
 
     // Approved されているか？
     if (pr.isApproved()) {
