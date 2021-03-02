@@ -17,6 +17,8 @@ export class PullRequest {
     }
     const pullRequestLabels: string[] = this.context.payload.pull_request
       .labels;
+    console.log(pullRequestLabels);
+    console.log(labels);
 
     return pullRequestLabels.some(label => labels.includes(label));
   }

@@ -41,6 +41,8 @@ class PullRequest {
         }
         const pullRequestLabels = this.context.payload.pull_request
             .labels;
+        console.log(pullRequestLabels);
+        console.log(labels);
         return pullRequestLabels.some(label => labels.includes(label));
     }
     // review 時の payload @see https://docs.github.com/en/rest/reference/pulls#reviews`
