@@ -39,11 +39,8 @@ class PullRequest {
         if (!this.context.payload.pull_request) {
             return false;
         }
-        const pullRequestLabels = this.context.payload.pull_request
-            .labels;
-        console.log(pullRequestLabels);
-        console.log(labels);
-        return pullRequestLabels.some(label => labels.includes(label));
+        const pullRequestLabels = this.context.payload.pull_request.labels;
+        return pullRequestLabels.some(label => labels.includes(label.name));
     }
     // review 時の payload @see https://docs.github.com/en/rest/reference/pulls#reviews`
     actionIsReviewed() {

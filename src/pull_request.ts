@@ -15,12 +15,9 @@ export class PullRequest {
     if (!this.context.payload.pull_request) {
       return false;
     }
-    const pullRequestLabels: string[] = this.context.payload.pull_request
-      .labels;
-    console.log(pullRequestLabels);
-    console.log(labels);
+    const pullRequestLabels: any[] = this.context.payload.pull_request.labels;
 
-    return pullRequestLabels.some(label => labels.includes(label));
+    return pullRequestLabels.some(label => labels.includes(label.name));
   }
 
   // review 時の payload @see https://docs.github.com/en/rest/reference/pulls#reviews`
