@@ -6,10 +6,12 @@ export async function main() {
   try {
     // input
     // GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    const myToken: string = core.getInput("MYTOKEN", { required: true });
-    console.log(`GET Token: ${myToken}`);
+    const GITHUB_TOKEN: string = core.getInput("GITHUB_TOKEN", {
+      required: true
+    });
+    console.log(`GET Token: ${GITHUB_TOKEN}`);
 
-    const client: any = github.getOctokit(myToken);
+    const client: any = github.getOctokit(GITHUB_TOKEN);
     console.log("created client");
 
     const pr = new PullRequest(client, github.context);

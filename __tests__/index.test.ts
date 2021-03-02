@@ -12,7 +12,7 @@ describe('mockInput', () => {
   const coreMocked = mocked(core)
   coreMocked.getInput.mockImplementation((name: string): string => {
     switch (name) {
-      case 'MYTOKEN':
+      case 'GITHUB_TOKEN':
         return 'token'
       default:
         return 'None'
@@ -45,7 +45,7 @@ test('succeess: label to pr', async () => {
     actor: "Kaze-for-test",
   }
   /* 
-  client = github.getOctokit(myToken) より client: undefined になる
+  client = github.getOctokit(GITHUB_TOKEN) より client: undefined になる
   addLabels: client.issues.addLabels ->  エラーが発生するため
   モックとして作成し，Promise<void>を返すようにしておく
   */

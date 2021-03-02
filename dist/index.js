@@ -37,9 +37,9 @@ function main() {
         try {
             // input
             // GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            const myToken = core.getInput("MYTOKEN", { required: true });
-            console.log(`GET Token: ${myToken}`);
-            const client = github.getOctokit(myToken);
+            const GITHUB_TOKEN = core.getInput("GITHUB_TOKEN", { required: true });
+            console.log(`GET Token: ${GITHUB_TOKEN}`);
+            const client = github.getOctokit(GITHUB_TOKEN);
             console.log("created client");
             const pr = new pull_request_1.PullRequest(client, github.context);
             console.log("created PullRequest");
