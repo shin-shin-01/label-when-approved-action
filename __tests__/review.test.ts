@@ -20,7 +20,7 @@ describe('mockInput', () => {
   })
 })
 
-test('succeess: label to pr', async () => {
+test('[review:success] PullRequestにラベルをつける', async () => {
   // @ts-ignore
   // ある程度必要な情報を定義
   github.context = {
@@ -35,7 +35,10 @@ test('succeess: label to pr', async () => {
         },
         closed_at: null,
         draft: false,
-        labels: ["labeled"],
+        labels: [{
+          color: "#cc0000",
+          name: "label"
+        }],
       },
       review: {
         state: "approved",
@@ -45,16 +48,18 @@ test('succeess: label to pr', async () => {
     actor: "Kaze-for-test",
   }
   /* 
-  client = github.getOctokit(GITHUB_TOKEN) より client: undefined になる
+  client = github.getOctokit(myToken) より client: undefined になる
   addLabels: client.issues.addLabels ->  エラーが発生するため
   モックとして作成し，Promise<void>を返すようにしておく
   */
+ const actionIsReviewed = jest.spyOn(PullRequest.prototype, 'actionIsReviewed')
  const isApprovedSpy = jest.spyOn(PullRequest.prototype, 'isApproved')
  const getUserNameSpy = jest.spyOn(PullRequest.prototype, 'getUserName')
  const hasAnyLabelSpy = jest.spyOn(PullRequest.prototype, 'hasAnyLabel')
  const addLabelsSpy = jest.spyOn(PullRequest.prototype, 'addLabels').mockReturnValue(Promise.resolve());
 
  await main()
+ expect(actionIsReviewed).toHaveBeenCalled()
  expect(isApprovedSpy).toHaveBeenCalled()
  expect(getUserNameSpy).toHaveBeenCalled()
  expect(hasAnyLabelSpy).toHaveBeenCalled()
@@ -63,7 +68,7 @@ test('succeess: label to pr', async () => {
  expect(new PullRequest('token', github.context).getUserName()).toBe("Kaze-for-test")
 })
   
-test('failuer: review is not APPROVED', async () => {
+test('[review:failure] review is not APPROVED', async () => {
   // @ts-ignore
   github.context = {
     payload: {
@@ -77,7 +82,10 @@ test('failuer: review is not APPROVED', async () => {
         },
         closed_at: null,
         draft: false,
-        labels: ["labeled"],
+        labels: [{
+          color: "#cc0000",
+          name: "label"
+        }],
       },
       review: {
         state: "commented", // not approved
@@ -86,20 +94,22 @@ test('failuer: review is not APPROVED', async () => {
     eventName: "pull_request_review",
     actor: "Kaze-for-test",
   }
-  
+
+  const actionIsReviewed = jest.spyOn(PullRequest.prototype, 'actionIsReviewed')
   const isApprovedSpy = jest.spyOn(PullRequest.prototype, 'isApproved')
   const getUserNameSpy = jest.spyOn(PullRequest.prototype, 'getUserName')
   const hasAnyLabelSpy = jest.spyOn(PullRequest.prototype, 'hasAnyLabel')
   const addLabelsSpy = jest.spyOn(PullRequest.prototype, 'addLabels').mockReturnValue(Promise.resolve());
 
   await main()
+  expect(actionIsReviewed).toHaveBeenCalled()
   expect(isApprovedSpy).toHaveBeenCalled()
   expect(getUserNameSpy).not.toHaveBeenCalled()
   expect(hasAnyLabelSpy).not.toHaveBeenCalled()
   expect(addLabelsSpy).not.toHaveBeenCalled()
 })
 
-test('failuer: already labeled by reviewer', async () => {
+test('[review:failure] already labeled by reviewer', async () => {
   // @ts-ignore
   github.context = {
     payload: {
@@ -113,7 +123,10 @@ test('failuer: already labeled by reviewer', async () => {
         },
         closed_at: null,
         draft: false,
-        labels: ["Kaze-for-test"], // already labeled
+        labels: [{
+          color: "#cc0000",
+          name: "Kaze-for-test"
+        }], // already labeled
       },
       review: {
         state: "approved",
@@ -123,12 +136,14 @@ test('failuer: already labeled by reviewer', async () => {
     actor: "Kaze-for-test",
   }
   
+  const actionIsReviewed = jest.spyOn(PullRequest.prototype, 'actionIsReviewed')
   const isApprovedSpy = jest.spyOn(PullRequest.prototype, 'isApproved')
   const getUserNameSpy = jest.spyOn(PullRequest.prototype, 'getUserName')
   const hasAnyLabelSpy = jest.spyOn(PullRequest.prototype, 'hasAnyLabel')
   const addLabelsSpy = jest.spyOn(PullRequest.prototype, 'addLabels').mockReturnValue(Promise.resolve());
 
   await main()
+  expect(actionIsReviewed).toHaveBeenCalled()
   expect(isApprovedSpy).toHaveBeenCalled()
   expect(getUserNameSpy).toHaveBeenCalled()
   expect(hasAnyLabelSpy).toHaveBeenCalled()
