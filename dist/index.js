@@ -37,7 +37,9 @@ function main() {
         try {
             // input
             // GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            const GITHUB_TOKEN = core.getInput("GITHUB_TOKEN", { required: true });
+            const GITHUB_TOKEN = core.getInput("GITHUB_TOKEN", {
+                required: true
+            });
             console.log(`GET Token: ${GITHUB_TOKEN}`);
             const client = github.getOctokit(GITHUB_TOKEN);
             console.log("created client");

@@ -2,7 +2,7 @@ name: Run Jest
 
 on:
   pull_request:
-    types: [closed]
+    types: [opened]
 
 jobs:
   build:
